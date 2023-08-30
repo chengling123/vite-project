@@ -56,6 +56,7 @@ const props = defineProps({
 		default: false,
 	},
 });
+const emit = defineEmits(['search', 'nodeClick']);
 
 const state = reactive({
 	List: [], // 树形结构列表数据
@@ -66,6 +67,7 @@ const buttonClass = computed(() => {
 	return ['!h-[20px]', 'reset-margin', '!text-gray-500', 'dark:!text-white', 'dark:hover:!text-primary'];
 });
 
+
 /**
  * 获取部门树
  */
@@ -75,10 +77,14 @@ const getdeptTree = () => {
 	const result=props.query(unref(searchName))
 	result.then((res:any) => {
 		console.log(res)
+		state.List=res.data
 	})
 
 }
 
+const handleNodeClick = (item: any) => {
+	emit('nodeClick', item);
+};
 
 onMounted(()=>{
 	getdeptTree();
@@ -108,6 +114,22 @@ onMounted(()=>{
         </el-dropdown>
       </div>
     </div>
+		<el-tree
+			class="mt20"
+			:data="state.List"
+			:props="props.props"
+			:expand-on-click-node="false"
+			ref="deptTreeRef"
+			:loading="state.localLoading"
+			node-key="id"
+			highlight-current
+			default-expand-all
+			@node-click="handleNodeClick"
+		>
+			<template #default="{ node, data }" v-if="$slots.default">
+				<slot :node="node" :data="data"></slot>
+			</template>
+		</el-tree>
   </div>
 </template>
 
