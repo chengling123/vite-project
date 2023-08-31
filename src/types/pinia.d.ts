@@ -10,3 +10,9 @@ declare interface RoutesListState<T = any> {
 	isColumnsMenuHover: Boolean;
 	isColumnsNavHover: Boolean;
 }
+
+// 路由缓存列表
+declare interface KeepAliveNamesState {
+	keepAliveNames: string[];
+	cachedViews: string[];
+}

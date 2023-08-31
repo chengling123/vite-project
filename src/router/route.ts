@@ -1,3 +1,21 @@
+import { RouteRecordRaw } from 'vue-router';
+export const dynamicRoutes = [
+	{
+		path: '/home',
+		name: 'router.home',
+		component: () => import('@/views/home/index.vue'),
+		meta: {
+			isLink: '',
+			isHide: false,
+			isKeepAlive: true,
+			isAffix: true,
+			isIframe: false,
+			icon: 'iconfont icon-shouye',
+		},
+	},
+	
+];
+
 /**
  * 定义静态路由（默认路由）
  */
@@ -18,7 +36,7 @@ export const staticRoutes= [
  */
 export const notFoundAndNoPower = [
 	{
-		path: '/:path(.*)*',
+		path: '/:pa33th(.*)*',
 		name: 'staticRoutes.notFound',
 		component: () => import('@/views/error/404.vue'),
 		meta: {
@@ -32,7 +50,7 @@ export const notFoundAndNoPower = [
  *
  * 所有节点都是挂载此节点下
  */
-export const baseRoutes= [
+export const baseRoutes: Array<RouteRecordRaw>= [
 	{
 		path: '/',
 		name: '/',
@@ -44,3 +62,5 @@ export const baseRoutes= [
 		children: [],
 	},
 ];
+
+
