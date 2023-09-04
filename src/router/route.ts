@@ -55,11 +55,25 @@ export const baseRoutes: Array<RouteRecordRaw>= [
 		path: '/',
 		name: '/',
 		component: () => import('@/layout/index.vue'),
-		redirect: '/home',
+		
 		meta: {
 			isKeepAlive: true,
 		},
-		children: [],
+		children: [
+			{
+				path: 'chengling',
+				name: 'Cheng',
+				component: () => import('@/views/home/index.vue'),
+				meta: {
+					isLink: '',
+					isHide: false,
+					isKeepAlive: true,
+					isAffix: true,
+					isIframe: false,
+					icon: 'iconfont icon-shouye',
+				},
+			},
+		],
 	},
 ];
 

@@ -1,9 +1,8 @@
 import { useMenuApi } from '@/api/admin/menu';
 import { useRequestOldRoutes } from '@/stores/requestOldRoutes';
-import { baseRoutes, notFoundAndNoPower, dynamicRoutes } from '@/router/route';
+import { baseRoutes, notFoundAndNoPower,dynamicRoutes } from '@/router/route';
 import { RouteRecordRaw } from 'vue-router';
 import { formatTwoStageRoutes, formatFlatteningRoutes, router } from '@/router/index';
-import { fileURLToPath } from 'url';
 // 引入 api 请求接口
 const menuApi = useMenuApi();
 
@@ -33,6 +32,11 @@ export function backEndComponent(routes:any){
     }else if(item.path){
       item.component = dynamicImport(dynamicViewsModules, item.path )
     }
+    //递归处理路由
+    // item.children = backEndComponent(item.children)
+    // if(item.children && item.children.length>0){
+    //   item.redirect=item.children[0].path
+    // }
     return item
 
   })
@@ -59,7 +63,9 @@ export function dynamicImport(dynamicViewsModules:Record<string,Function>, compo
 }
 
 export function setFilterRouteEnd() {
+  console.log('baseRoutes',baseRoutes)
 	let filterRouteEnd: any = formatTwoStageRoutes(formatFlatteningRoutes(baseRoutes));
+  console.log(filterRouteEnd)
 	// notFoundAndNoPower 防止 404、401 不在 layout 布局中，不设置的话，404、401 界面将全屏显示
 	// 关联问题 No match found for location with path 'xxx'
 	filterRouteEnd[0].children = [...filterRouteEnd[0].children, ...notFoundAndNoPower];
@@ -75,12 +81,13 @@ export function setFilterRouteEnd() {
 
 
 export async function setAddRoute() {
-	const res=await setFilterRouteEnd()
-  console.log(res)
-  res.forEach((route: RouteRecordRaw) => {
+	// const res=await setFilterRouteEnd()
+  console.log(baseRoutes[0])
+  baseRoutes[0].children?.forEach((route: RouteRecordRaw) => {
 
 		router.addRoute(route);
 	});
+  console.log(router.getRoutes())
 }
 
 
@@ -92,9 +99,9 @@ export async function initBackEndControlRoutes() {
   useRequestOldRoutes().setRequestOldRoutes(res.data)
 
   //处理路由
-  baseRoutes[0].children=[...dynamicRoutes,...(await backEndComponent(res.data))]
+  // baseRoutes[0].children=[...dynamicRoutes,...(await backEndComponent(res.data))  ]
   // 添加动态路由
-	await setAddRoute();
+	// await setAddRoute();
 
   
 
