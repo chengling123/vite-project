@@ -50,30 +50,42 @@ export const notFoundAndNoPower = [
  *
  * 所有节点都是挂载此节点下
  */
-export const baseRoutes: Array<RouteRecordRaw>= [
+// export const baseRoutes: Array<RouteRecordRaw>= [
+// 	{
+// 		path: '/',
+// 		name: '/',
+// 		component: () => import('@/layout/index.vue'),
+		
+// 		meta: {
+// 			isKeepAlive: true,
+// 		},
+// 		children: [
+// 			{
+// 				path: 'chengling',
+// 				name: 'Cheng',
+// 				component: () => import('@/views/home/index.vue'),
+// 				meta: {
+// 					isLink: '',
+// 					isHide: false,
+// 					isKeepAlive: true,
+// 					isAffix: true,
+// 					isIframe: false,
+// 					icon: 'iconfont icon-shouye',
+// 				},
+// 			},
+// 		],
+// 	},
+// ];
+export const baseRoutes: Array<RouteRecordRaw> = [
 	{
 		path: '/',
-		name: '/',
+		name: 'Home',
 		component: () => import('@/layout/index.vue'),
-		
+		redirect: '/home',
 		meta: {
 			isKeepAlive: true,
 		},
-		children: [
-			{
-				path: 'chengling',
-				name: 'Cheng',
-				component: () => import('@/views/home/index.vue'),
-				meta: {
-					isLink: '',
-					isHide: false,
-					isKeepAlive: true,
-					isAffix: true,
-					isIframe: false,
-					icon: 'iconfont icon-shouye',
-				},
-			},
-		],
+		children: [],
 	},
 ];
 

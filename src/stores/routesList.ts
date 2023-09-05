@@ -15,6 +15,7 @@ export const useRoutesList = defineStore('routesList', {
 	actions: {
 		async setRoutesList(data: Array<string>) {
 			this.routesList = data;
+			console.log(data)
 		},
 		async setColumnsMenuHover(bool: Boolean) {
 			this.isColumnsMenuHover = bool;

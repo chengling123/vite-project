@@ -27,3 +27,22 @@ export const Session={
   },
   getTenant(){}
 }
+
+
+export const local ={
+  setKey(key:string){
+    // @ts-ignore
+    return `${__NEXT_NAME__}:${key}`; 
+  },
+  //设置永久存储
+  set<T>(key:string,value:T){
+    console.log(key,value)
+    window.localStorage.setItem(local.setKey(key),JSON.stringify(value))
+  },
+  //获取永久缓存
+  get(key:string){
+    let json=<string>window.localStorage.getItem(local.setKey(key))
+    return JSON.parse(json)
+  },
+
+}

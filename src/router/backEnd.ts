@@ -3,6 +3,7 @@ import { useRequestOldRoutes } from '@/stores/requestOldRoutes';
 import { baseRoutes, notFoundAndNoPower,dynamicRoutes } from '@/router/route';
 import { RouteRecordRaw } from 'vue-router';
 import { formatTwoStageRoutes, formatFlatteningRoutes, router } from '@/router/index';
+import { useRoutesList } from '@/stores/routesList';
 // 引入 api 请求接口
 const menuApi = useMenuApi();
 
@@ -83,26 +84,38 @@ export function setFilterRouteEnd() {
 export async function setAddRoute() {
 	// const res=await setFilterRouteEnd()
   console.log(baseRoutes[0])
+  router.addRoute(baseRoutes[0])
   baseRoutes[0].children?.forEach((route: RouteRecordRaw) => {
 
-		router.addRoute(route);
+		router.addRoute('Home',route);
 	});
-  console.log(router.getRoutes())
+  
+}
+
+
+
+export async function setFilterMenuAndCacheTagsViewRoutes() {
+	const storesRoutesList = useRoutesList();
+	storesRoutesList.setRoutesList(baseRoutes[0].children as any);
+	// setCacheTagsViewRoutes();
 }
 
 
 export async function initBackEndControlRoutes() {
   const res = await getBackEndControlRoutes();
+  console.log(res)
   // 无登录权限时，添加判断
   if ((res.data || []).length <= 0) return Promise.resolve(true);
   //存储接口原始路由
   useRequestOldRoutes().setRequestOldRoutes(res.data)
 
   //处理路由
-  // baseRoutes[0].children=[...dynamicRoutes,...(await backEndComponent(res.data))  ]
+  baseRoutes[0].children=[...dynamicRoutes,...(await backEndComponent(res.data))  ]
   // 添加动态路由
-	// await setAddRoute();
+	await setAddRoute();
+  await setFilterMenuAndCacheTagsViewRoutes();
 
   
 
 }
+

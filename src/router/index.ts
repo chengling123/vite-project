@@ -8,30 +8,31 @@ import { Session } from '@/utils/storage'
 import { storeToRefs } from 'pinia'
 export const router = createRouter({
   history: createWebHashHistory(),
-  routes: [	{
-		path: '/',
-		name: '/',
-		component: () => import('@/layout/index.vue'),
+  // routes: [	{
+	// 	path: '/',
+	// 	name: '/',
+	// 	component: () => import('@/layout/index.vue'),
 		
-		meta: {
-			isKeepAlive: true,
-		},
-		children: [
-			{
-				path: 'chengling',
-				name: 'Cheng',
-				component: () => import('@/views/home/index.vue'),
-				meta: {
-					isLink: '',
-					isHide: false,
-					isKeepAlive: true,
-					isAffix: true,
-					isIframe: false,
-					icon: 'iconfont icon-shouye',
-				},
-			},
-		],
-	}],
+	// 	meta: {
+	// 		isKeepAlive: true,
+	// 	},
+	// 	children: [
+	// 		{
+	// 			path: 'chengling',
+	// 			name: 'Cheng',
+	// 			component: () => import('@/views/home/index.vue'),
+	// 			meta: {
+	// 				isLink: '',
+	// 				isHide: false,
+	// 				isKeepAlive: true,
+	// 				isAffix: true,
+	// 				isIframe: false,
+	// 				icon: 'iconfont icon-shouye',
+	// 			},
+	// 		},
+	// 	],
+	// }],
+  routes: [...notFoundAndNoPower, ...staticRoutes],
 })
 /**
  * 路由多级嵌套数组处理成一维数组

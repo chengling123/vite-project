@@ -36,7 +36,11 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
           rewrite: (path) => path.replace(/^\/pyue/, ''),
         }
       }
-    }
+    },
+    define: {
+			
+			__NEXT_NAME__: JSON.stringify(process.env.npm_package_name),
+		},
   }
 })
 

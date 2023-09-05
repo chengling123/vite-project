@@ -69,3 +69,11 @@ declare interface ThemeConfigState {
 		footerAuthor: string;
 	};
 }
+
+
+// TagsView 路由列表
+declare interface TagsViewRoutesState<T = any> {
+	tagsViewRoutes: T[];
+	isTagsViewCurrenFull: Boolean;
+	favoriteRoutes: T[];
+}
